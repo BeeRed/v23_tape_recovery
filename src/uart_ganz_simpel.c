@@ -53,6 +53,7 @@ double get_avg_sample(const int p)
 
 int main(int argc, char *argv[])
 {
+        size_t  items;
 	if (argc!=2) {
 		fprintf(stderr, "Usage: %s filename\n", argv[0]);
 		return 1;
@@ -62,11 +63,14 @@ int main(int argc, char *argv[])
 	size_t fs=ftell(f);
 	fseek(f, 0L, SEEK_SET);
 	b=malloc(fs);
-	fread(b, fs, 1, f);
+	items = fread(b, fs, 1, f);
+	if(items != fs) {
+	    printf("#ERR:fread() returns %lu != %lu requested\n", fs, items);
+	}
 	fclose(f);
 	cnt=fs/sizeof(double);
 
-	int n;
+//	int n;
 	int pos=0;
 	int start=-1;
 	int nstart=-1;

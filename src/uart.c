@@ -154,7 +154,7 @@ void start_run(octet_t *p)
 		int dtime=np->time-pp->time;
 		if (dtime>MINOLEN) { //This could be it
 			//FIXME Look for best octet
-			double q_idle=idle_between_octets(pp, np);
+//			double q_idle=idle_between_octets(pp, np);
 			if (np->start==NULL) { //A free octet => Make it part of our run
 				add_to_run(pp, np);
 				q_sum=q_sum+np->q;
@@ -214,6 +214,7 @@ void print_best_run(octet_t *p)
 
 int main(int argc, char *argv[])
 {
+        size_t	items;
 	if (argc!=2) {
 		fprintf(stderr, "Usage: %s filename\n", argv[0]);
 		return 1;
@@ -223,11 +224,14 @@ int main(int argc, char *argv[])
 	size_t fs=ftell(f);
 	fseek(f, 0L, SEEK_SET);
 	b=malloc(fs);
-	fread(b, fs, 1, f);
+	items = fread(b, fs, 1, f);
+	if(items != fs) {
+	    printf("#ERR:fread() returns %lu != %lu requested\n", fs, items);
+	}
 	fclose(f);
 	cnt=fs/sizeof(double);
 
-	int surpress=-1;
+//	int surpress=-1;
 	int n;
 	int ob=-1; //previous byte
 	int bt=0; //time with best quality

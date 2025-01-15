@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	while (scanf("%d%d", &t, &o)==2) {
 		if ((lt<0) || (t-lt>BLEN*100)  || (o==0x0c)) {
 			char fn[256];
-			int time=t/19200;
+//			int time=t/19200;
 			snprintf(fn, sizeof(fn)-1, "%s%09d.cpt", prefix, t);
 			if (f!=NULL) fclose(f);
 			f=fopen(fn, "w");

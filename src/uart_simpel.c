@@ -78,6 +78,7 @@ double quality(int sbp)
 
 int main(int argc, char *argv[])
 {
+        size_t  items;
 	if (argc!=2) {
 		fprintf(stderr, "Usage: %s filename\n", argv[0]);
 		return 1;
@@ -87,14 +88,17 @@ int main(int argc, char *argv[])
 	size_t fs=ftell(f);
 	fseek(f, 0L, SEEK_SET);
 	b=malloc(fs);
-	fread(b, fs, 1, f);
+	items = fread(b, fs, 1, f);
+	if(items != fs) {
+	    printf("#ERR:fread() returns %lu != %lu requested\n", fs, items);
+	}
 	fclose(f);
 	cnt=fs/sizeof(double);
 
-	int surpress=-1;
-	int n;
+	//int surpress=-1;
+	//int n;
 	int ob=-1; //previous byte
-	int bt=0; //time with best quality
+	//int bt=0; //time with best quality
 	double bq=0; //best quality
 	int scnt=0;
 	int pos=0;
@@ -110,7 +114,7 @@ int main(int argc, char *argv[])
 			//	}
 			}
 			bq=-1;
-			bt=n;
+			//bt=n;
 			scnt=0;
 		}
 		if (q>bq) {
