@@ -18,6 +18,8 @@ CFLAGS += -O2
 CFLAGS += -Wall
 CFLAGS += -g
 
+LDFLAGS = -lm
+
 all:	$(TARGETS)
 
 clean:
